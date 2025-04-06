@@ -1,13 +1,5 @@
 import  os
 
-# ========== utils.py ========== 
-
-"""
-Create a directory if it doesn't exist.
-
-Args:
-    directory (str): The path of the directory to create.
-"""
 def create_directory(directory):
     try:
         # Check if the directory exists, and create it if it doesn't

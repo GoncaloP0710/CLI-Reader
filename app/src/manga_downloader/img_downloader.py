@@ -1,6 +1,5 @@
 import requests
 import os
-# ========== manga_provider/Image Downloader ==========
 
 def download_image(image_url, save_path, file_name):
         
@@ -16,3 +15,5 @@ def download_image(image_url, save_path, file_name):
         print(f"Image successfully downloaded to {file_path}")
     else:
         raise Exception(f"Failed to download image: {response.status_code}")
+
+
