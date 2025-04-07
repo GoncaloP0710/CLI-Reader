@@ -91,3 +91,35 @@ class MangaProvider:
         
         print(f"Found {len(chapters)} chapters.")
         return chapters
+
+    def get_chapter_pages(self, chapter_url):
+        
+        # Make a GET request to the chapter URL
+        response = requests.get(chapter_url)
+        if response.status_code != 200:
+            raise Exception(f"Failed to fetch the chapter page: {response.status_code}")
+        
+        # Parse the HTML content
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        # Find all <picture> elements containing the images
+        picture_elements = soup.select('picture img.js-page')
+        if not picture_elements:
+            raise Exception("No pages found in the chapter.")
+        
+        # Extract page numbers and image URLs
+        pages = {}
+        for img in picture_elements:
+            # Extract the page number from the "alt" attribute
+            alt_text = img.get('alt', '')
+            page_number = None
+            if "Page" in alt_text:
+                page_number = int(alt_text.split("Page")[-1].strip())
+            
+            # Extract the image URL from the "data-src" attribute
+            image_url = img.get('data-src')
+            
+            if page_number and image_url:
+                pages[page_number] = image_url
+        
+        return pages

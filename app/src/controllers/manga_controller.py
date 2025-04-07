@@ -1,7 +1,9 @@
 import os
+import asyncio
+import aiohttp
 
 from manga_provider import MangaProvider
-from manga_downloader import download_image
+from manga_downloader import download_all_images
 from utils import create_directory
 
 class MangaController:
@@ -60,3 +62,22 @@ class MangaController:
         except Exception as e:
             print(f"Error: {e}")
             return None
+
+    def download_chapter(self, chapter_url, save_path):
+        """
+        Download all pages of a chapter using asyncio.
+
+        :param chapter_url: The URL of the chapter to download.
+        :param save_path: The path where the images will be saved.
+        """
+        try:
+            print("url: " + chapter_url)
+            pages = self.manga_provider.get_chapter_pages(chapter_url)  # Get all pages of the chapter
+            if not pages:
+                raise Exception("No pages found in the chapter.")
+            
+            # Run the asynchronous download
+            referer_url = chapter_url  # Use the chapter URL as the Referer
+            asyncio.run(download_all_images(pages, save_path, referer_url))
+        except Exception as e:
+            print(f"Error: {e}")
