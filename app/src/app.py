@@ -1,5 +1,8 @@
-from controllers import manga_controller
+from controllers import MangaController
 
-print("Starting Manga Loader...")
-# manga_controller.load_manga_preview("Naruto")
-print(manga_controller.list_mangas("https://mangapill.com/manga/2/one-piece"))
+manga_controller = MangaController()
+
+# Example usage
+print(manga_controller.load_manga_preview("One Piece"))
+# print(manga_controller.search_manga("One Piece"))
+# print(manga_controller.list_chapters("https://mangapill.com/manga/2/one-piece"))
