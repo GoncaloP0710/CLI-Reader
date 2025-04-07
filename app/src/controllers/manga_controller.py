@@ -30,3 +30,12 @@ def load_manga_preview(manga_title):
     except Exception as e:
         print(f"Error: {e}")
         return None
+
+def list_mangas(manga_title):
+    try:
+        chapters = manga_provider.get_chapters(manga_title) # Get the latest chapter
+        print(chapters)
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
