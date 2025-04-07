@@ -2,8 +2,11 @@ from controllers import MangaController
 
 manga_controller = MangaController()
 
+# Load manga preview
+# manga_info, cover_path = manga_controller.load_manga_preview("K on")
+
 # Search for the manga
-search_results = manga_controller.search_manga("K on")
+search_results = manga_controller.search_manga("One Piece")
 print("Search Results:")
 for idx, result in enumerate(search_results):
     print(f"{idx + 1}. {result['title']} - {result['url']}")

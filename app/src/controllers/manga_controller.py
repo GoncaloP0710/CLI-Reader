@@ -3,7 +3,7 @@ import asyncio
 import aiohttp
 
 from manga_provider import MangaProvider
-from manga_downloader import download_all_images
+from manga_downloader import download_all_images, download_image
 from utils import create_directory
 
 class MangaController:

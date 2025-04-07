@@ -3,42 +3,7 @@ import cloudscraper
 import asyncio
 import aiohttp
 from utils import create_directory
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+from aiofiles import open as aio_open
 
 def download_image(image_url, save_path, file_name, referer_url=None):
     # Create the directory if it doesn't exist
@@ -88,8 +53,8 @@ async def download_image_async(session, image_url, save_path, file_name, referer
     :param referer_url: The Referer URL for the request.
     """
     try:
-        # Create the directory if it doesn't exist
-        create_directory(save_path)
+        # Ensure the directory exists
+        os.makedirs(save_path, exist_ok=True)
 
         # Define the full file path for the image
         file_path = os.path.join(save_path, file_name)
@@ -106,14 +71,14 @@ async def download_image_async(session, image_url, save_path, file_name, referer
             "Sec-Fetch-Mode": "navigate",
             "Sec-Fetch-Site": "cross-site",
             "Sec-Fetch-User": "?1",
+            "Referer": referer_url or "https://mangapill.com/",
         }
-        headers["Referer"] = "https://mangapill.com/"
 
         # Asynchronously download the image
         async with session.get(image_url, headers=headers) as response:
             if response.status == 200:
-                with open(file_path, "wb") as file:
-                    file.write(await response.read())
+                async with aio_open(file_path, "wb") as file:
+                    await file.write(await response.read())
                 print(f"Image successfully downloaded: {file_path}")
             else:
                 print(f"Failed to download {image_url}: {response.status}")
@@ -129,13 +94,18 @@ async def download_all_images(pages, save_path, referer_url=None):
     :param save_path: The path where the images will be saved.
     :param referer_url: The Referer URL for the requests.
     """
-    # Create the directory if it doesn't exist
-    create_directory(save_path)
+    # Ensure the directory exists
+    os.makedirs(save_path, exist_ok=True)
 
     async with aiohttp.ClientSession() as session:
-        tasks = []
-        for page_number, image_url in pages.items():
-            file_name = f"page_{page_number}.jpg"
-            print(f"Queueing download for page {page_number} from {image_url}")
-            tasks.append(download_image_async(session, image_url, save_path, file_name, referer_url))
+        tasks = [
+            download_image_async(
+                session,
+                image_url,
+                save_path,
+                f"page_{page_number}.jpg",
+                referer_url,
+            )
+            for page_number, image_url in pages.items()
+        ]
         await asyncio.gather(*tasks)
