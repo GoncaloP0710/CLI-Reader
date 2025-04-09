@@ -1,4 +1,9 @@
 from controllers import MangaController
+from tui.start_menu import MainMenu  # Explicit import
+
+MainMenu().run()
+
+"""
 
 manga_controller = MangaController()
 
@@ -6,7 +11,7 @@ manga_controller = MangaController()
 # manga_info, cover_path = manga_controller.load_manga_preview("K on")
 
 # Search for the manga
-search_results = manga_controller.search_manga("Horimiya")
+search_results = manga_controller.search_manga("One piece")
 print("Search Results:")
 for idx, result in enumerate(search_results):
     print(f"{idx + 1}. {result['title']} - {result['url']}")
@@ -17,16 +22,16 @@ if search_results:
     manga_url = selected_manga["url"]  # Extract the URL
 
     # Fetch all chapters for the selected manga
-    all_chapters = manga_controller.list_chapters(manga_url)
-    for chapter in all_chapters:
-        chapter_number = None
-        chapter_link = None
-        chapter_link = chapter['url']
-        chapter_number = chapter['chapter_number']
+    all_chapters = manga_controller.list_chapters(manga_url)[-1]
 
-        if chapter_link:
-            save_path = f"../../manga/chapters/{selected_manga['title']}/Chapter {chapter_number}"
-            manga_controller.download_chapter(chapter_link, save_path)
+    chapter_link = all_chapters['url']
+    chapter_number = all_chapters['chapter_number']
+
+    if chapter_link:
+        save_path = f"../../manga/chapters/{selected_manga['title']}/Chapter {chapter_number}"
+        manga_controller.download_chapter(chapter_link, save_path)
 
 else:
     print("No manga found.")
+
+"""

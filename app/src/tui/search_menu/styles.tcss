@@ -1,0 +1,28 @@
+Screen {
+    align: center middle; /* Center the entire screen content */
+}
+
+#content-container {
+    background: transparent;
+    width: 60%; /* Set a fixed width for the container */
+    padding: 2; /* Add padding around the container */
+}
+
+OptionList {
+    border: round grey;
+    
+    background: transparent;
+    width: 100%; /* Make the OptionList take the full width of the container */
+    height: 60%; /* Adjust the height of the list */
+    content-align: center middle; /* Center the content inside the OptionList */
+}
+
+/* Style the "Go Back" button */
+Button#go-back-button {
+    width: 30%; /* Adjust the width of the button */
+    height: 3;
+    content-align: center middle;
+    border: round white;
+    background: transparent; /* Make the background transparent */
+    color: $text; /* Use the default text color */
+}
