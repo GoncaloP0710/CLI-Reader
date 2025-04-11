@@ -3,6 +3,8 @@ from textual.widgets import Footer, Header, OptionList, Button
 from textual.containers import Vertical
 from textual.screen import Screen
 
+from tui.manga_preview_menu.manga_preview_menu import MangaPreview
+
 class OptionListApp(Screen):
     CSS_PATH = "styles.tcss"
 
@@ -38,4 +40,4 @@ class OptionListApp(Screen):
         """Handle selection of an option."""
         selected_index = event.option_index
         selected_result = self.search_results[selected_index]
-        print(f"Selected option: {selected_result['title']} - {selected_result['url']}")
+        self.app.push_screen(MangaPreview(selected_result))  # Pass the selected result to MangaPreview

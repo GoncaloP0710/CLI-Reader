@@ -54,8 +54,14 @@ class MainMenu(App):
         self.image_widget = self.query_one("#image-cycler-widget", Static)
         self.progress_bar = self.query_one("#progress-bar", ProgressBar)
 
+        # Display the first image immediately
+        if self.image_paths:
+            first_image_path = self.image_paths[self.image_index]
+            self.image_widget.update(Image(first_image_path, width=40, height=30))
+            self.progress_bar.progress = int((self.image_index + 1) / len(self.image_paths) * 100)
+
         # Start a repeating task every 2 seconds
-        self.set_interval(2.0, self.update_image)
+        self.set_interval(4.0, self.update_image)
 
     def update_image(self):
         """Update image and progress bar."""
