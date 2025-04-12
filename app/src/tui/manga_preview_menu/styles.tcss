@@ -1,8 +1,23 @@
-
-
 /* Image container styling */
 #image-container {
     width: 30%; /* Take the remaining space */
     align: right top; /* Align to the right and vertically centered */
     padding: 1;
+}
+
+#chapter-list {
+    height: 1fr; /* Dynamically fill the remaining space */
+    border: round $primary;
+    color: $text;
+    background: transparent;
+    padding: 1;
+}
+
+Button#download-all-button {
+    width: 30%; /* Adjust the width of the button */
+    height: 3;
+    content-align: center middle;
+    border: round white;
+    background: transparent; /* Make the background transparent */
+    color: $text; /* Use the default text color */
 }

@@ -17,8 +17,6 @@ class DescriptionWidget(Static):
 
     def compose(self) -> ComposeResult:
         formatted_info = (
-            f"Title: {self.manga_info.get('title', 'N/A')}\n"
-            f"Type: {self.manga_info.get('type', 'N/A')}\n"
             f"Chapters: {self.manga_info.get('chapters', 'N/A')}\n"
             f"Volumes: {self.manga_info.get('volumes', 'N/A')}\n"
             f"Status: {self.manga_info.get('status', 'N/A')}\n"
@@ -40,24 +38,40 @@ class MangaPreview(Screen):
         cover = self.manga_preview[1]  # Assuming the cover image is the second element in the tuple
         chapter_list = MangaController().list_chapters(self.manga_pointer["url"])
 
-        print(self.manga_pointer["title"])
         """Compose the layout of the screen."""
-        yield Horizontal(
-            Vertical(
-                DescriptionWidget(self.manga_preview[0]),  # Display the manga description
-                Button("Go Back", id="go-back-button"),  # Add a "Go Back" button
-                id="content-container",  # Wrap both in a single container
-            ),
-            Vertical(
-                Static(
-                    Image(cover, width=30, height=20),  # Display the manga cover image
-                    id="logo-widget",
+        yield Vertical(
+            Horizontal(
+                Vertical(
+                    DescriptionWidget(self.manga_preview[0]),  # Display the manga description
+                    OptionList(
+                        *[f"Chapter {chapter['chapter_number']}" for chapter in chapter_list],
+                        id="chapter-list"
+                    ),  # Add a clickable list of chapters
+                    id="content-container",  # Wrap all in a single container
                 ),
-                id="image-container",  # Add an ID for styling
+                Vertical(
+                    Static(
+                        Image(cover, width=30, height=20),  # Display the manga cover image
+                        id="logo-widget",
+                    ),
+                    Button("Download all", id="download-all-button"),  # Add a "Go Back" button
+                    Button("Go Back", id="go-back-button"),  # Add a "Go Back" button
+                    id="image-container",  # Add an ID for styling
+                ),
             ),
+            id="main-container",  # Add an ID for the main container
         )
+
+    def on_option_list_selected(self, event: OptionList.OptionSelected) -> None:
+        """Handle chapter selection."""
+        selected_chapter_id = event.option.id
+        print(f"Selected chapter: {selected_chapter_id}")
+        # Add logic to handle chapter selection, e.g., load the chapter content
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Handle button presses."""
         if event.button.id == "go-back-button":
             self.app.pop_screen()  # Go back to the previous screen (MainMenu)
+        elif event.button.id == "download-all-button":
+            # TODO: Implement download functionality
+            print("Download all chapters functionality not implemented yet.")
