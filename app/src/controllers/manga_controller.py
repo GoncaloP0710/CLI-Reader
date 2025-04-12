@@ -23,7 +23,7 @@ class MangaController:
                 elif cover_path == -1:
                     print(f"Error creating directory for the cover from {manga_title}.")
                     return None
-                return manga_info, f"../../manga/covers/{manga_title}"        
+                return manga_info, f"../../manga/covers/{manga_title}/" + manga_title + ".jpg"    
             else:
                 raise Exception(f"Manga with title '{manga_title}' not found.")
                 return manga_info, None

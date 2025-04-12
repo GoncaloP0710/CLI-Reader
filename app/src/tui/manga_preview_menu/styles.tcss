@@ -1,1 +1,8 @@
 
+
+/* Image container styling */
+#image-container {
+    width: 30%; /* Take the remaining space */
+    align: right top; /* Align to the right and vertically centered */
+    padding: 1;
+}

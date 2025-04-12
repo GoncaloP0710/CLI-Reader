@@ -33,7 +33,7 @@ class OptionListApp(Screen):
         """Handle button presses."""
         if event.button.id == "go-back-button":
             # Lazy import to avoid circular dependency
-            from tui.start_menu.start_menu import MainMenu
+            #from tui.start_menu.start_menu import MainMenu
             self.app.pop_screen()  # Go back to the previous screen (MainMenu)
 
     def on_option_list_option_selected(self, event: OptionList.OptionSelected) -> None:

@@ -4,6 +4,7 @@ from textual.widgets import Header, Footer, Static, Input, ProgressBar
 from textual_image.renderable import Image
 from natsort import natsorted
 import os
+from textual.screen import Screen
 
 from tui.search_menu.search_menu import OptionListApp
 from controllers import MangaController
@@ -15,7 +16,7 @@ class DescriptionWidget(Static):
             "Use the search function to find titles, and enjoy fast navigation with keyboard shortcuts."
         )
 
-class MainMenu(App):
+class MainMenu(Screen):
     CSS_PATH = "styles.css"
     BINDINGS = [("q", "quit", "Quit")]
 
@@ -31,6 +32,7 @@ class MainMenu(App):
         self.image_index = 0
 
     def compose(self) -> ComposeResult:
+        print("MainMenu is mounted")
         """Compose the main menu layout."""
         yield Horizontal(
             Vertical(
@@ -84,7 +86,7 @@ class MainMenu(App):
             # Search for the manga
             animes_search_results = MangaController().search_manga(query)
             # Push the OptionListApp screen with the search results
-            self.push_screen(OptionListApp(animes_search_results))
+            self.app.push_screen(OptionListApp(animes_search_results))
             
 if __name__ == "__main__":
     MainMenu().run()
