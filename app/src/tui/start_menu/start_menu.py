@@ -81,12 +81,20 @@ class MainMenu(Screen):
     def on_input_submitted(self, event: Input.Submitted) -> None:
         """Handle search input submission."""
         query = event.value.strip()  # Get the user input
+        input_widget = self.query_one("#search-input", Input)
         if query:  # Ensure the input is not empty
             print(f"Search submitted: {query}")
             # Search for the manga
             animes_search_results = MangaController().search_manga(query)
-            # Push the OptionListApp screen with the search results
-            self.app.push_screen(OptionListApp(animes_search_results))
+
+            if not animes_search_results:
+                print("No results found.")
+                
+                input_widget.value = ""
+                input_widget.placeholder = "No mangas found with that name."
+            else:
+                # Push the OptionListApp screen with the search results
+                self.app.push_screen(OptionListApp(animes_search_results))
             
 if __name__ == "__main__":
     MainMenu().run()

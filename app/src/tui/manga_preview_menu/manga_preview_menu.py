@@ -7,6 +7,8 @@ from textual_image.renderable import Image
 
 from controllers import MangaController
 
+from tui.manga_reading_menu.manga_reading_menu import MangaReader
+
 cover = None
 
 class DescriptionWidget(Static):
@@ -32,26 +34,26 @@ class MangaPreview(Screen):
         super().__init__()
         self.manga_pointer = manga_pointer 
         print(self.manga_pointer["title"])
+        self.manga_preview = MangaController().load_manga_preview(self.manga_pointer["title"])
+        self.cover = self.manga_preview[1]  # Assuming the cover image is the second element in the tuple
+        self.chapter_list = MangaController().list_chapters(self.manga_pointer["url"])
 
     def compose(self) -> ComposeResult:
-        self.manga_preview = MangaController().load_manga_preview(self.manga_pointer["title"])
-        cover = self.manga_preview[1]  # Assuming the cover image is the second element in the tuple
-        chapter_list = MangaController().list_chapters(self.manga_pointer["url"])
-
         """Compose the layout of the screen."""
         yield Vertical(
             Horizontal(
                 Vertical(
                     DescriptionWidget(self.manga_preview[0]),  # Display the manga description
                     OptionList(
-                        *[f"Chapter {chapter['chapter_number']}" for chapter in chapter_list],
-                        id="chapter-list"
-                    ),  # Add a clickable list of chapters
+                        *[f"Chapter {chapter['chapter_number']}" for chapter in self.chapter_list],
+                        id="chapter-list",
+                    ),
+  # Add a clickable list of chapters
                     id="content-container",  # Wrap all in a single container
                 ),
                 Vertical(
                     Static(
-                        Image(cover, width=30, height=20),  # Display the manga cover image
+                        Image(self.cover, width=30, height=20),  # Display the manga cover image
                         id="logo-widget",
                     ),
                     Button("Download all", id="download-all-button"),  # Add a "Go Back" button
@@ -75,3 +77,9 @@ class MangaPreview(Screen):
         elif event.button.id == "download-all-button":
             # TODO: Implement download functionality
             print("Download all chapters functionality not implemented yet.")
+
+    def on_option_list_option_selected(self, event: OptionList.OptionSelected) -> None:
+        """Handle selection of an option in the chapter list."""
+        selected_index = event.option_index
+        selected_result = self.chapter_list[selected_index]
+        self.app.push_screen(MangaReader(self.chapter_list, selected_result))  # Pass the selected result to MangaReader
