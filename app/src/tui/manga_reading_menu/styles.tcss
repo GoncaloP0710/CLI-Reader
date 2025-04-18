@@ -1,0 +1,5 @@
+/* Image container styling */
+#manga_image_container {
+    width: 80%; /* Take the remaining space */
+    align: center middle; /* Align to the right and vertically centered */
+}

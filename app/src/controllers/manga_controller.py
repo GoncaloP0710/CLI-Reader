@@ -63,7 +63,7 @@ class MangaController:
             print(f"Error: {e}")
             return None
 
-    def download_chapter(self, chapter_url, save_path):
+    async def download_chapter(self, chapter_url, save_path):
         """
         Download all pages of a chapter using asyncio.
 
@@ -71,13 +71,14 @@ class MangaController:
         :param save_path: The path where the images will be saved.
         """
         try:
-            print("url: " + chapter_url)
-            pages = self.manga_provider.get_chapter_pages(chapter_url)  # Get all pages of the chapter
-            if not pages:
-                raise Exception("No pages found in the chapter.")
-            
-            # Run the asynchronous download
-            referer_url = chapter_url  # Use the chapter URL as the Referer
-            asyncio.run(download_all_images(pages, save_path, referer_url))
+            if not os.path.exists(save_path):
+                # Get all pages of the chapter
+                pages = self.manga_provider.get_chapter_pages(chapter_url)
+                if not pages:
+                    raise Exception("No pages found in the chapter.")
+
+                # Run the asynchronous download
+                referer_url = chapter_url  # Use the chapter URL as the Referer
+                await download_all_images(pages, save_path, referer_url)
         except Exception as e:
-            print(f"Error: {e}")
+            print(f"Error during chapter download: {e}")

@@ -4,12 +4,40 @@ from textual.containers import Vertical, Horizontal
 from textual.screen import Screen
 from textual.widgets import Static
 from textual_image.renderable import Image
+import asyncio
 
 from controllers import MangaController
 
 from tui.manga_reading_menu.manga_reading_menu import MangaReader
 
 cover = None
+
+from textual.app import App, ComposeResult
+from textual.widgets import LoadingIndicator
+
+class LoadingApp(Screen):
+    def __init__(self, load_screen_coro):
+        super().__init__()
+        self.load_screen_coro = load_screen_coro
+
+    async def on_mount(self) -> None:
+        asyncio.create_task(self.do_loading())
+
+    async def do_loading(self) -> None:
+        next_screen = await self.load_screen_coro()
+
+        # Ensure the next screen is valid
+        if next_screen is not None:
+            self.app.pop_screen()  # Remove the LoadingApp screen
+            self.app.push_screen(next_screen)  # Push the next screen
+        else:
+            self.app.log("Error: load_screen_coro returned None.")
+            self.app.pop_screen()  # Close the LoadingApp screen
+            # Optionally, you can show an error message or return to the previous screen
+
+    def compose(self) -> ComposeResult:
+        """Compose the layout of the LoadingApp screen."""
+        yield Static("Downloading chapter...", id="loading-message")
 
 class DescriptionWidget(Static):
 
@@ -56,7 +84,6 @@ class MangaPreview(Screen):
                         Image(self.cover, width=30, height=20),  # Display the manga cover image
                         id="logo-widget",
                     ),
-                    Button("Download all", id="download-all-button"),  # Add a "Go Back" button
                     Button("Go Back", id="go-back-button"),  # Add a "Go Back" button
                     id="image-container",  # Add an ID for styling
                 ),
@@ -74,12 +101,21 @@ class MangaPreview(Screen):
         """Handle button presses."""
         if event.button.id == "go-back-button":
             self.app.pop_screen()  # Go back to the previous screen (MainMenu)
-        elif event.button.id == "download-all-button":
-            # TODO: Implement download functionality
-            print("Download all chapters functionality not implemented yet.")
 
-    def on_option_list_option_selected(self, event: OptionList.OptionSelected) -> None:
+    async def on_option_list_option_selected(self, event: OptionList.OptionSelected) -> None:
         """Handle selection of an option in the chapter list."""
         selected_index = event.option_index
         selected_result = self.chapter_list[selected_index]
-        self.app.push_screen(MangaReader(self.chapter_list, selected_result))  # Pass the selected result to MangaReader
+
+        async def load_manga_reader():
+            # Perform the actual work in a separate thread to avoid blocking the event loop
+            def create_manga_reader():
+                # Simulate real work (e.g., fetching data or creating the screen)
+                return MangaReader(self.chapter_list, selected_result, self.manga_pointer["title"])
+
+            # Run the blocking work in a separate thread
+            return await asyncio.to_thread(create_manga_reader)
+
+        # Push the LoadingApp screen with the coroutine to load the MangaReader screen
+        self.app.push_screen(LoadingApp(load_manga_reader))
+        
