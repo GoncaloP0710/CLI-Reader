@@ -1,0 +1,72 @@
+# CLI-Reader
+
+CLI-Reader is a terminal-based manga reader application built with Python. It allows users to browse and read manga chapters directly from the command line.
+
+## Preview
+
+<img src="files/README/1.png" alt="plot" width="400"/> <img src="files/README/2.png" alt="plot" width="400"/>
+
+<img src="files/README/3.png" alt="plot" width="400"/> <img src="files/README/4.png" alt="plot" width="400"/>
+
+## Features
+
+- **Manga Navigation**: Browse through manga chapters and pages.
+- **Terminal UI**: Built with [Textual](https://github.com/Textualize/textual) for a rich terminal-based user interface.
+- **Manga Details API**: Powered by [Jikan API](https://jikan.moe/) to fetch detailed information about manga, including titles, authors, and summaries.
+- **Manga Provider**: Uses [MangaPill](https://mangapill.com/) as the primary source for manga chapters and pages.
+
+## Installation
+
+1. Clone the repository:
+```bash
+   git clone https://github.com/your-username/CLI-Reader.git
+   cd CLI-Reader
+```
+
+2. Create a virtual environment:
+```bash
+   python -m venv venv
+```
+
+3. Activate the virtual environment:
+```bash
+   source venv/bin/activate
+```
+
+4. pip install -r requirements.txt
+```bash
+   pip install -r requirements.txt
+```
+
+5. Run the application:
+```bash
+   python app/src/app.py
+```
+
+---
+
+### Running with Docker
+
+1. Build the Docker image:
+```bash
+   docker build -t cli-reader .
+```
+
+2. Run the Docker container:
+```bash
+   docker run -it cli-reader
+```
+
+## Next Updates
+
+Here are the planned updates for CLI-Reader:
+
+- **Download All Chapters**: Add functionality to download all chapters of a manga at once for offline reading.
+- **Zoom and Move Images**: Enhance the reading experience by allowing users to zoom in on images and move them around for better readability.
+- **Reading Lists**:
+  - **Currently Reading**: Track manga that the user is actively reading.
+  - **To Read**: Maintain a list of manga that the user plans to read in the future.
+  - **Dropped**: Keep track of manga that the user has decided to stop reading.
+- **Choose Manga Source**: Add the ability to select the manga provider (e.g., MangaPill or other websites) for scraping manga content.
+
+Stay tuned for these exciting updates!
