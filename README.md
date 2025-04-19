@@ -23,38 +23,9 @@ CLI-Reader is a terminal-based manga reader application built with Python. It al
    cd CLI-Reader
 ```
 
-2. Create a virtual environment:
-```bash
-   python -m venv venv
-```
-
-3. Activate the virtual environment:
-```bash
-   source venv/bin/activate
-```
-
-4. pip install -r requirements.txt
-```bash
-   pip install -r requirements.txt
-```
-
-5. Run the application:
-```bash
-   python app/src/app.py
-```
-
----
-
-### Running with Docker
-
-1. Build the Docker image:
-```bash
-   docker build -t cli-reader .
-```
-
-2. Run the Docker container:
-```bash
-   docker run -it cli-reader
+2. Run the application:
+```python
+   ./run_app 
 ```
 
 ## Next Updates

@@ -23,7 +23,7 @@ class MainMenu(Screen):
     def __init__(self):
         super().__init__()
         # Dynamically load all image files from the directory
-        image_directory = "/app/files/main_menu/Chapter 1"
+        image_directory = "app/files/main_menu/Chapter 1"
         self.image_paths = [
             os.path.join(image_directory, file)
             for file in natsorted(os.listdir(image_directory))  # Use natsorted for natural sorting
@@ -37,7 +37,7 @@ class MainMenu(Screen):
         yield Horizontal(
             Vertical(
                 Static(
-                    Image("/app/files/main_menu/logo_clean.png", width=20, height=10),
+                    Image("app/files/main_menu/logo_clean.png", width=20, height=10),
                     id="logo-widget",
                 ),
                 DescriptionWidget(id="description", expand=True),

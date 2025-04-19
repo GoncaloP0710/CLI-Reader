@@ -30,7 +30,7 @@ class MangaReader(Screen):
     async def on_mount(self) -> None:
         """Called when the screen is mounted."""
         # Start downloading the chapter asynchronously
-        save_path = Path(f"manga/chapters/{self.manga_name}/{self.chapter_pointer['chapter_number']}")
+        save_path = Path(f"app/manga/chapters/{self.manga_name}/{self.chapter_pointer['chapter_number']}")
         chapter_url = self.chapter_pointer["url"]
 
         # Log the start of the download
