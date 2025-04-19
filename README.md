@@ -4,9 +4,9 @@ CLI-Reader is a terminal-based manga reader application built with Python. It al
 
 ## Preview
 
-<img src="files/README/1.png" alt="plot" width="400"/> <img src="files/README/2.png" alt="plot" width="400"/>
+<img src="app/files/README/1.png" alt="plot" width="400"/> <img src="app/files/README/2.png" alt="plot" width="400"/>
 
-<img src="files/README/3.png" alt="plot" width="400"/> <img src="files/README/4.png" alt="plot" width="400"/>
+<img src="app/files/README/3.png" alt="plot" width="400"/> <img src="app/files/README/4.png" alt="plot" width="400"/>
 
 ## Features
 
@@ -19,8 +19,7 @@ CLI-Reader is a terminal-based manga reader application built with Python. It al
 
 1. Clone the repository:
 ```bash
-   git clone https://github.com/your-username/CLI-Reader.git
-   cd CLI-Reader
+   git clone https://github.com/your-username/CLI-Reader.git && cd CLI-Reader
 ```
 
 2. Run the application:
