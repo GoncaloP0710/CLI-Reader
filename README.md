@@ -22,24 +22,9 @@ CLI-Reader is a terminal-based manga reader application built with Python. It al
    git clone https://github.com/your-username/CLI-Reader.git && cd CLI-Reader
 ```
 
-2. Create a virtual environment:
-```bash
-   python -m venv venv
-```
-
-3. Activate the virtual environment:
-```bash
-   source venv/bin/activate
-```
-
-4. pip install -r requirements.txt
-```bash
-   pip install -r requirements.txt
-```
-
-5. Run the application:
+2. Run the application:
 ```python
-   ./run_app 
+   python run_app.py
 ```
 
 ## Next Updates
