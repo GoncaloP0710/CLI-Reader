@@ -17,13 +17,13 @@ class MangaController:
             if manga_info: # Get the manga cover image
                 manga_title = manga_info.get("title")
                 image_url = manga_info.get("images", {}).get("jpg", {}).get("image_url")
-                cover_path = create_directory(f"../../manga/covers/{manga_title}")
+                cover_path = create_directory(f"app/files/manga/covers/{manga_title}")
                 if cover_path == 1:
-                    download_image(image_url, "../../manga/covers/" + manga_title, manga_title + ".jpg")
+                    download_image(image_url, "app/files/manga/covers/" + manga_title, manga_title + ".jpg")
                 elif cover_path == -1:
                     print(f"Error creating directory for the cover from {manga_title}.")
                     return None
-                return manga_info, f"../../manga/covers/{manga_title}/" + manga_title + ".jpg"    
+                return manga_info, f"app/files/manga/covers/{manga_title}/" + manga_title + ".jpg"
             else:
                 raise Exception(f"Manga with title '{manga_title}' not found.")
                 return manga_info, None
