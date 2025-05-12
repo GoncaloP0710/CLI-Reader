@@ -27,6 +27,12 @@ CLI-Reader is a terminal-based manga reader application built with Python. It al
    python run_app.py
 ```
 
+3. If you want to get the app showing on Rofi:
+```
+   Change the directory in the Exec line of the app.desktop file to the correct one where the project is.
+   Place the file (app.desktop) isnside the /home/{user_name}/.local/share/applications directory.
+```
+
 ## Next Updates
 
 Here are the planned updates for CLI-Reader:

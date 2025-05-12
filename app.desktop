@@ -1,0 +1,7 @@
+
+[Desktop Entry]
+Name=Cli-READER
+Exec=/usr/bin/env bash -c 'cd /home/goncalop0710/Desktop/Projects/CLI-Reader && python run_app.py'
+Terminal=true
+Type=Application
+Categories=Development;
